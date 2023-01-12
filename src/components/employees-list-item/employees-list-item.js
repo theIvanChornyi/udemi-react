@@ -14,9 +14,8 @@ class EmployeesListItem extends Component {
   };
 
   render() {
-    const { name, salary } = this.props;
+    const { name, salary, onDelete, id } = this.props;
     const { increase, like } = this.state;
-
     return (
       <li
         className={clsx(
@@ -43,6 +42,7 @@ class EmployeesListItem extends Component {
           </button>
 
           <button
+            onClick={() => onDelete(id)}
             type="button"
             className={clsx(style.listGroupItemButtonTrash, 'btn-sm')}
           >
