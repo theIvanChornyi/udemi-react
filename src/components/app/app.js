@@ -5,6 +5,12 @@ import EmployeesList from 'components/employees-list/employees-list';
 import SearchPanel from 'components/search-panel/search-panel';
 import style from './app.module.css';
 const App = () => {
+  const data = [
+    { id: 1, name: 'Ivan', salary: 1000, increase: false },
+    { id: 2, name: 'Olga', salary: 800, increase: false },
+    { id: 3, name: 'Viktoria', salary: 650, increase: false },
+  ];
+
   return (
     <div className={style.app}>
       <AppInfo />
@@ -12,7 +18,7 @@ const App = () => {
         <SearchPanel />
         <AppFilter />
       </div>
-      <EmployeesList />
+      <EmployeesList emploees={data} />
       <EmployeesAddForm />
     </div>
   );

@@ -4,7 +4,7 @@ import style from './employees-add-form.module.css';
 
 const EmployeesAddForm = () => {
   return (
-    <div className={style.addForm}>
+    <div className={style.appAddForm}>
       <h3>Добавьте нового сотрудника</h3>
       <form className={clsx(style.addForm, 'd-flex')}>
         <input
