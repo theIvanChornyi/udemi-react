@@ -15,7 +15,7 @@ const data = [
 ];
 
 class App extends Component {
-  state = { employees: data };
+  state = { employees: data, filter: '', selector: 'all' };
 
   onHandleAddEmployees = ({ salary, name }) => {
     if (salary <= 0 || name.length < 3) return;
@@ -28,10 +28,30 @@ class App extends Component {
     }));
   };
 
+  onHandleChangeSallary = (id, salary) => {
+    this.setState(({ employees }) => ({
+      employees: [...employees].map(item => {
+        if (item.id === id) {
+          return { ...item, salary };
+        } else {
+          return item;
+        }
+      }),
+    }));
+  };
+
   onHandleDeleteEmployees = id => {
     this.setState(({ employees }) => ({
       employees: employees.filter(item => item.id !== id),
     }));
+  };
+
+  onChangeTab = selector => {
+    this.setState({ selector });
+  };
+
+  onInputFilter = filter => {
+    this.setState({ filter });
   };
 
   onHandleToogle = (id, prop) => {
@@ -48,22 +68,40 @@ class App extends Component {
   };
 
   render() {
+    const { employees, filter, selector } = this.state;
+    const employeesNum = employees.length;
+    const employeesIncreaseNum = employees.filter(
+      ({ increase }) => increase
+    ).length;
+
+    const visibleData = employees
+      .filter(item => {
+        switch (this.state.selector) {
+          case 'increese':
+            return item.increase;
+          case 'rich':
+            return item.salary > 1000;
+          default:
+            return true;
+        }
+      })
+      .filter(({ name }) => name.toLowerCase().includes(filter));
+
     return (
       <div className={style.app}>
         <AppInfo
-          employees={this.state.employees.length}
-          employeesIncrease={
-            this.state.employees.filter(({ increase }) => increase).length
-          }
+          employees={employeesNum}
+          employeesIncrease={employeesIncreaseNum}
         />
         <div className={style.searchPanel}>
-          <SearchPanel />
-          <AppFilter />
+          <SearchPanel onInputFilter={this.onInputFilter} />
+          <AppFilter selector={selector} onChangeTab={this.onChangeTab} />
         </div>
         <EmployeesList
           onDelete={this.onHandleDeleteEmployees}
           onHandleToogle={this.onHandleToogle}
-          emploees={this.state.employees}
+          emploees={visibleData}
+          onHandleChangeSallary={this.onHandleChangeSallary}
         />
         <EmployeesAddForm onHandleAddEmployees={this.onHandleAddEmployees} />
       </div>

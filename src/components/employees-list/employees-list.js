@@ -1,7 +1,12 @@
 import style from './employees-list.module.css';
 import EmployeesListItem from '../employees-list-item/employees-list-item';
 
-const EmployeesList = ({ emploees, onDelete, onHandleToogle }) => {
+const EmployeesList = ({
+  emploees,
+  onDelete,
+  onHandleToogle,
+  onHandleChangeSallary,
+}) => {
   return (
     <ul className={style.appList}>
       {emploees.map(item => (
@@ -9,6 +14,7 @@ const EmployeesList = ({ emploees, onDelete, onHandleToogle }) => {
           key={item.id}
           onDelete={onDelete}
           onHandleToogle={onHandleToogle}
+          onHandleChangeSallary={onHandleChangeSallary}
           {...item}
         />
       ))}

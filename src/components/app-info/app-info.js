@@ -1,7 +1,6 @@
 import style from './app-info.module.css';
 
 const AppInfo = ({ employees, employeesIncrease }) => {
-  console.log(employeesIncrease);
   return (
     <div className={style.appInfo}>
       <h1>Учет сотрудников в компании N</h1>
